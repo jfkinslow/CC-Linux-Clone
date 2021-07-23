@@ -45,9 +45,9 @@ if #args == 1 then
             local newTestPass = ""
             local confirmTestPass = ""
             while testPassNotEqual do
-                term.write("New Root Password: ")
+                term.write("New testuser Password: ")
                 newTestPass = read(" ")
-                term.write("Confirm Root Password: ")
+                term.write("Confirm testuser Password: ")
                 confirmTestPass = read(" ")
                 if newTestPass == confirmTestPass then
                     testPassNotEqual = false
