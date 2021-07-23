@@ -1,0 +1,1 @@
+print(settings.get("login.user"))

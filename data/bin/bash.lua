@@ -3,7 +3,7 @@ shell.run("/startup/00_path")
 term.clear()
 term.setCursorPos(1,1)
 term.setTextColor(colors.yellow)
-shell.run("/usr/bin/version")
+shell.run("/bin/version")
 term.setTextColor(colors.white)
 if (settings.get("motd.enable") == true) then
     local motd = shell.resolveProgram("motd")
@@ -21,7 +21,7 @@ function exitBash()
     term.setCursorPos(1,1)
     if (settings.get("login.shell") == "/bin/bash") then
        if (tonumber(settings.get("login.currentShellDepth")) == 0) then
-           shell.run("/usr/bin/logout")
+           shell.run("/bin/logout")
        else
            settings.set("login.currentShellDepth", tonumber(settings.get("login.currentShellDepth")) - 1)
            running = false
