@@ -1,0 +1,5 @@
+settings.unset("login.user")
+settings.unset("login.home")
+settings.unset("login.shell")
+settings.unset("login.currentShellDepth")
+os.reboot()

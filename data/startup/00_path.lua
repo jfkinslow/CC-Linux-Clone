@@ -1,0 +1,1 @@
+shell.setPath("/bin:/usr/bin:/rom/programs:/rom/programs/rednet:/rom/programs/fun:/rom/programs/fun/advanced:/rom/programs/pocket:/rom/programs/http")
