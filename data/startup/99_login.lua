@@ -1,1 +1,1 @@
-shell.run("/bin/login.lua")
+shell.run("/usr/bin/login.lua")
