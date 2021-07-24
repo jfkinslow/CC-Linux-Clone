@@ -65,7 +65,7 @@ function mainLoop()
         end
         term.setTextColor(colors.white)
         
-        local programName = read()
+        local programName = read(nil, nil, shell.complete)
         local args = ""
         if string.find(programName, " ") then
             local start = string.find(programName, " ")

@@ -46,7 +46,7 @@ while true do
             fs.makeDir(homedir)
             shell.setDir(homedir)
         end
-        if loginshell ~= "" then
+        if loginshell ~= "default" then
             shell.run(loginshell)
         end
         term.clear()
