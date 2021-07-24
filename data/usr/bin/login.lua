@@ -20,13 +20,19 @@ while true do
     local authed = false
     local homedir = ""
     local loginshell = ""
+    local reason = nil
     for i,v in ipairs(users) do
         if v.username == user then
             if v.password == pass then
-                authed = true
-                homedir = v.home
-                loginshell = v.shell
-                break
+                if v.enabled == true then
+                    authed = true
+                    homedir = v.home
+                    loginshell = v.shell
+                    break
+                else
+                    reason = "This user account is disabled"
+                    break
+                end
             end
         end
     end
@@ -56,6 +62,10 @@ while true do
         end
         break
     else
-        print("Did not recognize those credentials.")
+        if reason == nil then
+            print("Did not recognize those credentials.")
+        else
+            print(reason)
+        end
     end
 end
