@@ -2,9 +2,13 @@ os.pullEvent = os.pullEventRaw
 shell.run("/startup/00_path")
 term.clear()
 term.setCursorPos(1,1)
-term.setTextColor(colors.yellow)
-shell.run("/bin/version")
-term.setTextColor(colors.white)
+if term.isColor() then
+    term.setTextColor(colors.yellow)
+    shell.run("/bin/version")
+    term.setTextColor(colors.white)
+else
+    shell.run("/bin/version")
+end
 if (settings.get("motd.enable") == true) then
     local motd = shell.resolveProgram("motd")
     shell.run("/"..motd)
@@ -13,6 +17,21 @@ if settings.get("login.currentShellDepth") ~= nil then
     settings.set("login.currentShellDepth", tonumber(settings.get("login.currentShellDepth")) + 1)
 else
     settings.set("login.currentShellDepth", 0)
+end
+local homedir = settings.get("login.home")
+local profile = homedir.."/.bash_profile.lua"
+local PS1 = ""
+if (fs.exists(profile)) then
+    shell.run(profile)
+end
+if (settings.get("PS1") ~= nil) then
+    PS1 = settings.get("PS1")
+else
+    if pocket then
+        PS1 = settings.get("login.user").." "..curDirShown.." # "
+    else
+        PS1 = settings.get("login.user").."@"..settings.get("login.hostname").." "..curDirShown.." # "
+    end
 end
 local ctrl = false
 local running = true
@@ -57,14 +76,13 @@ function mainLoop()
         if (currentDir == settings.get("login.home")) then
             curDirShown = "~"
         end
-        term.setTextColor(colors.yellow)
-        if pocket then
-            term.write(settings.get("login.user").." "..curDirShown.." # ")
+        if term.isColor() then
+            term.setTextColor(colors.yellow)
+            term.write(PS1)
+            term.setTextColor(colors.white)
         else
-            term.write(settings.get("login.user").."@"..settings.get("login.hostname").." "..curDirShown.." # ")
+            term.write(PS1)
         end
-        term.setTextColor(colors.white)
-        
         local programName = read(nil, nil, shell.complete)
         local args = ""
         if string.find(programName, " ") then

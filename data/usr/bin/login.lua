@@ -7,9 +7,13 @@ local hostname = hostnameFile:readAll()
 settings.set("login.hostname", hostname)
 term.clear()
 term.setCursorPos(1,1)
-term.setTextColor(colors.yellow)
-print("JKOS 1.0")
-term.setTextColor(colors.white)
+if term.isColor() then
+    term.setTextColor(colors.yellow)
+    print("JKOS 1.0")
+    term.setTextColor(colors.white)
+else
+    print("JKOS 1.0")
+end
 while true do
     term.write("Username: ")
     local user = read()
@@ -51,11 +55,17 @@ while true do
         end
         term.clear()
         term.setCursorPos(1,1)
-        term.setTextColor(colors.yellow)
-        print("JKOS 1.0")
-        print("ComputerID: "..os.getComputerID())
-        print("Logged in as: "..user)
-        term.setTextColor(colors.white)
+        if term.isColor() then
+            term.setTextColor(colors.yellow)
+            print("JKOS 1.0")
+            print("ComputerID: "..os.getComputerID())
+            print("Logged in as: "..user)
+            term.setTextColor(colors.white)
+        else
+            print("JKOS 1.0")
+            print("ComputerID: "..os.getComputerID())
+            print("Logged in as: "..user)
+        end
         if (settings.get("motd.enable") == true) then
             local motd = shell.resolveProgram("motd")
             shell.run("/"..motd)
