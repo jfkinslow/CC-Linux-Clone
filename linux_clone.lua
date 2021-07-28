@@ -283,6 +283,7 @@ if #args == 1 then
         print(fs.delete("/bin/logout.lua"))
         print(fs.delete("/bin/pwd.lua"))
         print(fs.delete("/bin/version.lua"))
+        print(fs.delete("/bin/linux_clone.lua"))
         -- /etc
         print(fs.delete("/etc/hostname"))
         print(fs.delete("/etc/passwd"))
@@ -299,10 +300,41 @@ if #args == 1 then
         -- /usr/sbin
         print(fs.delete("/usr/sbin/adduser.lua"))
         print(fs.delete("/usr/sbin/useradd.lua"))
+    elseif (command == "upgrade") then
+        local curDir = shell.dir()
+        local request = http.get("https://raw.githubusercontent.com/jfkinslow/CC-Linux-Clone/master/linux_clone.lua")
+        local file = nil
+        if (curDir == "") then
+            if fs.exists("/linux_clone.lua") then
+                file = fs.open("/linux_clone.lua", "w")
+            else
+                file = fs.open("/bin/linunx_clone.lua", "w")
+            end
+        else
+            file = fs.open("/bin/linux_clone.lua", "w")
+        end
+        
+        local data = request.readAll()
+        textutils.slowPrint(data)
+        file.write(data)
+        file.close()
+        request.close()
+        local installer = ""
+        if (curDir == "") then
+            if fs.exists("/linux_clone.lua") then
+                installer = "/linux_clone.lua"
+            else
+                installer = "/bin/linux_clone.lua"
+            end
+        else
+            installer = "/bin/linux_clone.lua"
+        end
+        shell.run(installer, "update")
     else
-        print("Usage: linux_clone install|update|remove")
-        print("install: Installs a fresh copy of CC-Linux-Clone")
-        print("update: updates the already installed copy of CC-Linux-Clone")
-        print("remove: Removes all files required for CC-Linux-Clone (saves user files)")
+        print("Usage   : linux_clone install|update|remove")
+        print("install : Installs a fresh copy of CC-Linux-Clone")
+        print("update  : updates the already installed copy of CC-Linux-Clone")
+        print("upgrade : Replaces this file with a newer copy and updates CC-Linux-Clone")
+        print("remove  : Removes all files required for CC-Linux-Clone (saves user files)")
     end
 end
