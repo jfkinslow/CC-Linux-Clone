@@ -1,4 +1,5 @@
 local args = {...}
+local curDir = shell.dir()
 if #args == 1 then
     local command = args[1]
     if (command == "install") then
@@ -311,7 +312,6 @@ if #args == 1 then
         print(fs.delete("/usr/sbin/adduser.lua"))
         print(fs.delete("/usr/sbin/useradd.lua"))
     elseif (command == "upgrade") then
-        local curDir = shell.dir()
         local request = http.get("https://raw.githubusercontent.com/jfkinslow/CC-Linux-Clone/master/linux_clone.lua")
         local file = nil
         if (curDir == "") then
