@@ -167,7 +167,11 @@ if #args == 1 then
         file.write(request.readAll())
         file.close()
         request.close()
-        fs.move("/linux_clone.lua", "/bin/linux_clone.lua")
+        if (curDir == "") then
+            if fs.exists("/linux_clone.lua") then
+                fs.move("/linux_clone.lua", "/bin/linux_clone.lua")
+            end
+        end
         term.write("OS Reboot Required(y/n): ")
         local doReboot = read()
         if (doReboot == "y" or doReboot == "Y") then
