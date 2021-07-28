@@ -167,6 +167,7 @@ if #args == 1 then
         file.write(request.readAll())
         file.close()
         request.close()
+        fs.move("/linux_clone.lua", "/bin/linux_clone.lua")
         term.write("OS Reboot Required(y/n): ")
         local doReboot = read()
         if (doReboot == "y" or doReboot == "Y") then
@@ -271,6 +272,7 @@ if #args == 1 then
         file.write(request.readAll())
         file.close()
         request.close()
+        fs.move("/linux_clone.lua", "/bin/linux_clone.lua")
         term.write("OS Reboot Required(y/n): ")
         local doReboot = read()
         if (doReboot == "y" or doReboot == "Y") then
