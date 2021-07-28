@@ -35,6 +35,7 @@ else
 end
 local ctrl = false
 local running = true
+local history = {}
 function exitBash()
     term.clear()
     term.setCursorPos(1,1)
@@ -76,14 +77,15 @@ function mainLoop()
         if (currentDir == settings.get("login.home")) then
             curDirShown = "~"
         end
+        local programName = ""
         if term.isColor() then
             term.setTextColor(colors.yellow)
-            term.write(PS1)
+            programName = read(nil, history, shell.complete, PS1)
             term.setTextColor(colors.white)
         else
-            term.write(PS1)
+            programName = read(nil, history, shell.complete, PS1)
         end
-        local programName = read(nil, nil, shell.complete)
+        
         local args = ""
         if string.find(programName, " ") then
             local start = string.find(programName, " ")
