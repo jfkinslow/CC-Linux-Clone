@@ -20,6 +20,7 @@ if #args == 1 then
         print(fs.makeDir("/usr/bin"))
         print(fs.makeDir("/usr/sbin"))
         print(fs.makeDir("/var"))
+        print(fs.makeDir("/var/cache"))
         print(fs.makeDir("/var/log"))
         term.write("Do you wish to disable the testuser(y/n): ")
         local testuser = read()
@@ -79,6 +80,31 @@ if #args == 1 then
         local usersFile = fs.open("/etc/passwd", "w")
         usersFile.write(textutils.serializeJSON(usersData))
         usersFile.close()
+        -- /etc/version
+        local request = http.get("https://raw.githubusercontent.com/jfkinslow/CC-Linux-Clone/master/data/etc/version")
+        local file = fs.open("/etc/version", "w")
+        file.write(request.readAll())
+        file.close()
+        request.close()
+        -- /etc/apt
+        if (fs.exists("etc/apt")) then
+            local file = fs.open("/etc/apt/00_linux_clone.repo", "w")
+            local versionFile = fs.open("/etc/version")
+            local version = versionFile.readAll()
+            versionFile.close()
+            print("Updating apt repo to version '" .. version .. "'")
+            file.write("https://raw.githubusercontent.com/jfkinslow/CC-Linux-Clone-Apt-Repo/master/" .. version .. "/")
+            file.close()
+        else
+            fs.makeDir("/etc/apt")
+            local file = fs.open("/etc/apt/00_linux_clone.repo", "w")
+            local versionFile = fs.open("/etc/version")
+            local version = versionFile.readAll()
+            versionFile.close()
+            print("Updating apt repo to version '" .. version .. "'")
+            file.write("https://raw.githubusercontent.com/jfkinslow/CC-Linux-Clone-Apt-Repo/master/" .. version .. "/")
+            file.close()
+        end
         -- /bin
         local request = http.get("https://raw.githubusercontent.com/jfkinslow/CC-Linux-Clone/master/data/bin/bash.lua")
         local file = fs.open("/bin/bash.lua", "w")
@@ -111,6 +137,11 @@ if #args == 1 then
         file.close()
         request.close()
         -- /usr/bin
+        local request = http.get("https://raw.githubusercontent.com/jfkinslow/CC-Linux-Clone/master/data/usr/bin/apt.lua")
+        local file = fs.open("/usr/bin/apt.lua", "w")
+        file.write(request.readAll())
+        file.close()
+        request.close()
         local request = http.get("https://raw.githubusercontent.com/jfkinslow/CC-Linux-Clone/master/data/usr/bin/login.lua")
         local file = fs.open("/usr/bin/login.lua", "w")
         file.write(request.readAll())
@@ -189,6 +220,7 @@ if #args == 1 then
         print(fs.delete("/startup/00_path.lua"))
         print(fs.delete("/startup/99_login.lua"))
         -- /usr/bin
+        print(fs.delete("/usr/bin/apt.lua"))
         print(fs.delete("/usr/bin/login.lua"))
         print(fs.delete("/usr/bin/passwd.lua"))
         print(fs.delete("/usr/bin/su.lua"))
@@ -224,7 +256,42 @@ if #args == 1 then
         file.write(request.readAll())
         file.close()
         request.close()
+        -- /etc/version
+        local request = http.get("https://raw.githubusercontent.com/jfkinslow/CC-Linux-Clone/master/data/etc/version")
+        local file = fs.open("/etc/version", "w")
+        file.write(request.readAll())
+        file.close()
+        request.close()
+        -- /etc/apt
+        if (fs.exists("etc/apt")) then
+            local file = fs.open("/etc/apt/00_linux_clone.repo", "w")
+            local versionFile = fs.open("/etc/version")
+            local version = versionFile.readAll()
+            versionFile.close()
+            print("Updating apt repo to version '" .. version .. "'")
+            file.write("https://raw.githubusercontent.com/jfkinslow/CC-Linux-Clone-Apt-Repo/master/" .. version .. "/")
+            file.close()
+        else
+            fs.makeDir("/etc/apt")
+            local file = fs.open("/etc/apt/00_linux_clone.repo", "w")
+            local versionFile = fs.open("/etc/version")
+            local version = versionFile.readAll()
+            versionFile.close()
+            print("Updating apt repo to version '" .. version .. "'")
+            file.write("https://raw.githubusercontent.com/jfkinslow/CC-Linux-Clone-Apt-Repo/master/" .. version .. "/")
+            file.close()
+        end
         -- /usr/bin
+        local request = http.get("https://raw.githubusercontent.com/jfkinslow/CC-Linux-Clone/master/data/usr/bin/apt.lua")
+        local file = fs.open("/usr/bin/apt.lua", "w")
+        file.write(request.readAll())
+        file.close()
+        request.close()
+        local request = http.get("https://raw.githubusercontent.com/jfkinslow/CC-Linux-Clone/master/data/usr/bin/login.lua")
+        local file = fs.open("/usr/bin/login.lua", "w")
+        file.write(request.readAll())
+        file.close()
+        request.close()
         local request = http.get("https://raw.githubusercontent.com/jfkinslow/CC-Linux-Clone/master/data/usr/bin/login.lua")
         local file = fs.open("/usr/bin/login.lua", "w")
         file.write(request.readAll())
@@ -311,6 +378,8 @@ if #args == 1 then
         -- /usr/sbin
         print(fs.delete("/usr/sbin/adduser.lua"))
         print(fs.delete("/usr/sbin/useradd.lua"))
+        -- /var/cache
+        print(fs.delete("/var/cache"))
     elseif (command == "upgrade") then
         local request = http.get("https://raw.githubusercontent.com/jfkinslow/CC-Linux-Clone/master/linux_clone.lua")
         local file = nil
@@ -344,7 +413,7 @@ if #args == 1 then
         end
         shell.run(installer, "update")
     else
-        print("Usage   : linux_clone install|update|remove")
+        print("Usage   : linux_clone install|update|upgrade|remove")
         print("install : Installs a fresh copy of CC-Linux-Clone")
         print("update  : updates the already installed copy of CC-Linux-Clone")
         print("upgrade : Replaces this file with a newer copy and updates CC-Linux-Clone")
