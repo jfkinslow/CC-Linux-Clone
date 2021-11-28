@@ -89,7 +89,7 @@ if #args == 1 then
         -- /etc/apt
         if (fs.exists("etc/apt")) then
             local file = fs.open("/etc/apt/00_linux_clone.repo", "w")
-            local versionFile = fs.open("/etc/version")
+            local versionFile = fs.open("/etc/version", "r")
             local version = versionFile.readAll()
             versionFile.close()
             print("Updating apt repo to version '" .. version .. "'")
@@ -98,7 +98,7 @@ if #args == 1 then
         else
             fs.makeDir("/etc/apt")
             local file = fs.open("/etc/apt/00_linux_clone.repo", "w")
-            local versionFile = fs.open("/etc/version")
+            local versionFile = fs.open("/etc/version", "r")
             local version = versionFile.readAll()
             versionFile.close()
             print("Updating apt repo to version '" .. version .. "'")
@@ -265,7 +265,7 @@ if #args == 1 then
         -- /etc/apt
         if (fs.exists("etc/apt")) then
             local file = fs.open("/etc/apt/00_linux_clone.repo", "w")
-            local versionFile = fs.open("/etc/version")
+            local versionFile = fs.open("/etc/version", "r")
             local version = versionFile.readAll()
             versionFile.close()
             print("Updating apt repo to version '" .. version .. "'")
