@@ -8,6 +8,10 @@ if (args[1] == "update") then
         end
         for i,v in ipairs(repoFiles) do
             print(v)
+            local repofile = fs.open(v, "r")
+            local repoURL = repofile.readAll()
+            repofile.close()
+            print(repoURL)
         end
     end
 elseif (args[1] == "install") then
