@@ -20,7 +20,10 @@ if #args == 1 then
         print(fs.makeDir("/usr/bin"))
         print(fs.makeDir("/usr/sbin"))
         print(fs.makeDir("/var"))
+<<<<<<< HEAD
+=======
         print(fs.makeDir("/var/cache"))
+>>>>>>> b2c5bdc3670d4d350db56007459e45ff864501ba
         print(fs.makeDir("/var/log"))
         term.write("Do you wish to disable the testuser(y/n): ")
         local testuser = read()
