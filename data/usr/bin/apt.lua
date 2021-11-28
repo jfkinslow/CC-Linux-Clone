@@ -9,7 +9,7 @@ if (args[1] == "update") then
         for i,v in ipairs(repoFiles) do
             print(v)
             local repofile = fs.open(v, "r")
-            local repoURL = reopfile.readAll()
+            local repoURL = repofile.readAll()
             repofile.close()
             print(repoURL)
         end
