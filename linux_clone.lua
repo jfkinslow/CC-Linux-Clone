@@ -387,7 +387,7 @@ if #args == 1 then
             if fs.exists("/linux_clone.lua") then
                 file = fs.open("/linux_clone.lua", "w")
             else
-                file = fs.open("/bin/linunx_clone.lua", "w")
+                file = fs.open("/bin/linux_clone.lua", "w")
             end
         else
             file = fs.open("/bin/linux_clone.lua", "w")
