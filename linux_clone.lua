@@ -137,6 +137,11 @@ if #args == 1 then
         file.close()
         request.close()
         -- /usr/bin
+        local request = http.get("https://raw.githubusercontent.com/jfkinslow/CC-Linux-Clone/master/data/usr/bin/add-apt-repository.lua")
+        local file = fs.open("/usr/bin/add-apt-repository.lua", "w")
+        file.write(request.readAll())
+        file.close()
+        request.close()
         local request = http.get("https://raw.githubusercontent.com/jfkinslow/CC-Linux-Clone/master/data/usr/bin/apt.lua")
         local file = fs.open("/usr/bin/apt.lua", "w")
         file.write(request.readAll())
@@ -220,6 +225,7 @@ if #args == 1 then
         print(fs.delete("/startup/00_path.lua"))
         print(fs.delete("/startup/99_login.lua"))
         -- /usr/bin
+        print(fs.delete("/usr/bin/add-apt-repository.lua"))
         print(fs.delete("/usr/bin/apt.lua"))
         print(fs.delete("/usr/bin/login.lua"))
         print(fs.delete("/usr/bin/passwd.lua"))
@@ -282,6 +288,11 @@ if #args == 1 then
             file.close()
         end
         -- /usr/bin
+        local request = http.get("https://raw.githubusercontent.com/jfkinslow/CC-Linux-Clone/master/data/usr/bin/add-apt-repository.lua")
+        local file = fs.open("/usr/bin/add-apt-repository.lua", "w")
+        file.write(request.readAll())
+        file.close()
+        request.close()
         local request = http.get("https://raw.githubusercontent.com/jfkinslow/CC-Linux-Clone/master/data/usr/bin/apt.lua")
         local file = fs.open("/usr/bin/apt.lua", "w")
         file.write(request.readAll())
