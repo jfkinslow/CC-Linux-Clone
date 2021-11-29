@@ -12,15 +12,16 @@ if (args[1] == "update") then
             local repoURL = repofile.readAll()
             repofile.close()
             print(repoURL)
-            local repo = http.get(repoURL .. "/packages.json")
             if (fs.exists("/var/cache/apt/00_linux_clone")) then
                 if (fs.isDir("/var/cache/apt/00_linux_clone")) then
+                    local repo = http.get(repoURL .. "/packages.json")
                     local repofile = fs.open("/var/cache/apt/00_linux_clone/packages.json", "w")
                     repofile.write(repo.readAll())
                     repofile.close()
                     repo.close()
                 end
             else
+                local repo = http.get(repoURL .. "/packages.json")
                 fs.makeDir("/var/cache/apt/00_linux_clone")
                 local repofile = fs.open("/var/cache/apt/00_linux_clone/packages.json", "w")
                 repofile.write(repo.readAll())
