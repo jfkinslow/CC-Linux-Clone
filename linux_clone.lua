@@ -286,7 +286,7 @@ if #args == 1 then
         else
             fs.makeDir("/etc/apt")
             local file = fs.open("/etc/apt/00_linux_clone.repo", "w")
-            local versionFile = fs.open("/etc/version")
+            local versionFile = fs.open("/etc/version", "r")
             local version = versionFile.readAll()
             versionFile.close()
             print("Updating apt repo to version '" .. version .. "'")
@@ -378,6 +378,7 @@ if #args == 1 then
         end
     elseif (command == "remove") then
         -- /bin
+        print(fs.delete("/bin/apt.lua"))
         print(fs.delete("/bin/bash.lua"))
         print(fs.delete("/bin/hostname.lua"))
         print(fs.delete("/bin/logout.lua"))
